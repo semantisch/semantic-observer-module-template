@@ -1,0 +1,14 @@
+{
+  "protocol": "observer-module/v1",
+  "id": "example.person-orcid",
+  "version": "0.1.0",
+  "repository": "https://github.com/semantisch/semantic-observer-module-template",
+  "description": "Propose ORCID links from verified, captured person profiles.",
+  "entrypoint": ["python", "-m", "observer_module.main"],
+  "task": "person-identifiers",
+  "after": ["crawl_graph", "people_knowledge", "published_graph"],
+  "capabilities": {"actions": ["add"], "predicates": ["https://schema.org/sameAs"], "network": [], "privateDocuments": false, "directGraphWrites": false},
+  "limits": {"timeoutSeconds": 30, "memoryMiB": 128, "cpuMillis": 250, "maxChanges": 5},
+  "acceptance": "administrator-review",
+  "status": "reference-contract; public module registration is planned"
+}

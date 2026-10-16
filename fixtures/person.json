@@ -1,0 +1,9 @@
+{
+  "protocol": "observer-module/v1",
+  "workspace": "https://example.org/observer/demo",
+  "baseSnapshot": "https://example.org/observer/demo/snapshots/one",
+  "crawlSnapshot": "https://example.org/observer/demo/crawl/snapshots/one",
+  "ontologyRevision": "https://example.org/observer/demo/ontology/revisions/one",
+  "entity": {"id": "https://example.org/observer/demo/entity/person/ada", "name": "Ada Example", "profileUrls": ["https://university.example/ada"], "identifiers": []},
+  "sources": [{"url": "https://university.example/ada", "pageVersion": "https://example.org/observer/demo/crawl/pages/ada/versions/one", "passages": [{"id": "p0", "text": "SYNTHETIC TEST FIXTURE: Ada Example. ORCID https://orcid.org/0000-0002-1825-0097."}]}]
+}
