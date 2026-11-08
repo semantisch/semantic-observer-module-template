@@ -35,4 +35,16 @@ class ModuleTests(unittest.TestCase):
     def test_foreign_source(self):
         self.task['sources'][0]['pageVersion']='https://another.example/crawl/one'
         with self.assertRaises(ValueError):propose(self.task,self.manifest)
+    def test_shared_canonical_identity_and_source_are_allowed_by_membership(self):
+        self.task['entity']['id']='https://canonical.example/person/ada'
+        self.task['scope']['entities']=[self.task['entity']['id']]
+        self.task['sources'][0]['pageVersion']='https://sources.example/captures/one'
+        self.task['scope']['sourceVersions']=[self.task['sources'][0]['pageVersion']]
+        self.assertEqual(len(propose(self.task,self.manifest)['proposal']['changes']),1)
+    def test_matching_project_prefix_does_not_grant_membership(self):
+        self.task['scope']['entities']=[]
+        with self.assertRaises(ValueError):propose(self.task,self.manifest)
+    def test_missing_host_scope_rejected(self):
+        del self.task['scope']
+        with self.assertRaises(ValueError):propose(self.task,self.manifest)
 if __name__=='__main__':unittest.main()

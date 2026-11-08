@@ -1,4 +1,4 @@
-# Reference contract v1
+# Reference contract v2
 
 A module consumes one UTF-8 JSON object on standard input and emits one JSON object on standard output. Diagnostics go to standard error. Exit zero means a review bundle was produced, including a legitimate empty proposal; it does not mean changes were accepted. The process must stop within its declared budget.
 
@@ -18,3 +18,9 @@ The host resolves evidence references to its own captured text, quotations and p
 `proposal.entities` is empty in this example. A future module allowed to introduce entities must supply declared types, names, identity evidence and references that pass the host schema. `gaps` records ambiguity, unavailable providers and unsupported fields. Missing evidence must not become a guessed value.
 
 This example allows only ORCID identity-link additions on the selected person. Its validator rejects other subjects, predicates, actions, stale versions, fabricated passages and duplicate changes. It does not prove semantic truth: the source relationship still needs review. Template checks supplement the host's authorization, identity, RDF, SHACL/ShEx, stale-input and provenance checks.
+
+## Shared project scope
+
+The host supplies `scope.entities` and `scope.sourceVersions` from authorised project membership and evidence access. Canonical entities and captured sources may have identifiers outside the project namespace. Matching a project URI prefix does not grant access. These lists are trusted input from the host, never permissions asserted by a module. The host must repeat membership and evidence checks before accepting a proposal.
+
+Version 2 replaces the old URI-prefix check. The ORCID proposal example remains a local evidence contract. It is not a report extension and cannot be submitted to the current report-contribution endpoint. For installed extensions with pages and API/MCP tools, use the [Observer Extensions examples](https://github.com/Dobriy-AI/observer-extensions).

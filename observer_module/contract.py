@@ -2,7 +2,7 @@
 import hashlib
 import json
 from urllib.parse import urlparse
-PROTOCOL = 'observer-module/v1'
+PROTOCOL = 'observer-module/v2'
 PINS = ('workspace', 'baseSnapshot', 'crawlSnapshot', 'ontologyRevision')
 def digest(value):
     return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode()).hexdigest()
@@ -12,14 +12,17 @@ def validate_input(value):
     if value.get('protocol') != PROTOCOL or any(not https(value.get(k)) for k in PINS):
         raise ValueError('Expected supported protocol and pinned HTTPS graph identities')
     e = value.get('entity', {})
-    if not https(e.get('id')) or not e['id'].startswith(value['workspace']+'/entity/') or not e.get('name'):
-        raise ValueError('Entity must belong to this workspace')
+    scope = value.get('scope', {})
+    if not isinstance(scope.get('entities'), list) or not isinstance(scope.get('sourceVersions'), list):
+        raise ValueError('Expected host-authorised project membership and source versions')
+    if not https(e.get('id')) or e['id'] not in scope['entities'] or not e.get('name'):
+        raise ValueError('Entity must be authorised for this project')
     if not isinstance(e.get('profileUrls'), list) or not all(https(u) for u in e['profileUrls']):
         raise ValueError('Expected known profile URLs from the graph')
     seen = set()
     for source in value.get('sources', []):
-        if not https(source.get('url')) or not https(source.get('pageVersion')) or not source['pageVersion'].startswith(value['workspace']+'/crawl/'):
-            raise ValueError('Source must be an immutable capture in this workspace')
+        if not https(source.get('url')) or not https(source.get('pageVersion')) or source['pageVersion'] not in scope['sourceVersions']:
+            raise ValueError('Source must be an authorised immutable capture')
         for p in source.get('passages', []):
             key = (source['url'], p.get('id'))
             if key in seen or not p.get('id') or not isinstance(p.get('text'), str):

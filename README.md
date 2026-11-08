@@ -2,7 +2,9 @@
 
 Build a small, independently versioned bot that proposes evidence-backed changes to a research knowledge graph. Use this repository as a GitHub template or clone it. It is shared-platform tooling: BilAI is one configuration, not a separate implementation.
 
-**Status:** the executable reference module and its local contract tests work today. Public graph reading is live. Self-service module registration, contribution credentials and managed container execution are the next integration stage; this repository does not pretend those write endpoints already exist. It never modifies BKG directly.
+**Observer Extensions:** For installable project extensions, generated pages and API/MCP report tools, see [Observer Extensions](https://github.com/Dobriy-AI/observer-extensions). This template demonstrates a separate entity-proposal contract.
+
+**Status:** the executable reference module and its local contract tests work today. Public graph reading is live. Admission and execution of this entity-proposal module remain an integration stage; this repository does not pretend those write endpoints already exist. It never modifies BKG directly.
 
 ## Run the example
 
